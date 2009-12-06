@@ -1,3 +1,108 @@
-h2. Member List Custom Field for EE2.0
+h1. CKI Member List Custom Field
+
+*ft.cki_mblist.php*
 
 This is a custom fieldtype that will add a drop down list of all your site members to your ExpressionEngine publish form.  When displaying the field in your ExpressionEngine templates the custom field tag will allow you to retrieve any information stored for that member, such as Email, Screen name, Member ID, Member group name etc.
+
+h2. Info
+
+Developed by Christopher Imrie, http://www.christopherimrie.com<br/>
+This field type is inspired by LG Member list (http://leevigraham.com/cms-customisation/expressionengine/lg-member-list/)<br/>
+
+h2. Requirements
+
+* ExpressionEngine 2.0 PB
+
+h2. Installation
+
+* Copy <code>ft.cki_mblist.php</code> to your <code>system/expressionengine/fieldtypes/</code> folder.<br/>
+* Select *CKI Member List* as the field type when creating a new custom field type
+
+h2. How to use
+
+*Parameters*
+* <code>get</code> - Accepts field names of the _exp_members_ and _exp_member_groups_
+
+The field type supports single tag and tag pairs, depending on whether you want more than one piece of member data at any one time.
+
+The member_id of the selected member can be produced by simply using the Field name of your custom field with no parameters.  If you want to retrieve a specific item of member data, you can use the <code>get</code> parameter to specify what data you want returned.
+
+h3. Simple Example
+
+Lets say you have defined a custom field with a field label of *Member_list* and field name *member_list* and through the publish form selected a member with an ID of 3.  You can produce the Member ID of the selected member by simply calling the field name tag on its own:
+
+<pre>
+	<code>
+		{exp:channel:entries channel="blog"}
+			<p>You selected member ID {member_list}</p>
+		{/exp:channel:entries}
+	</code>
+</pre>
+
+*Returns:*
+<pre>
+	<code><p>You selected member ID 3</p></code>
+</pre>
+
+h3. Parameter Example
+
+Using the same member you have selected in the above example, we can retrieve this member's email address by using the <code>get</code> parameter:
+
+<pre>
+	<code>
+		{exp:channel:entries channel="blog"}
+			<p>You selected member email is {member_list get="email"}</p>
+		{/exp:channel:entries}
+	</code>
+</pre>
+
+*Returns:*
+<pre>
+	<code><p>Your selected member email is john@smith.com</p></code>
+</pre>
+
+h3. Tag Pair Example
+
+If you are looking to display a block of many pieces of member data within a template, it will most be likely be useful to use the tag pairs, as they can allow you reduce the amount of markup needed.  The <code>get</code> parameter is ignored when using tag pairs.
+
+Using the same scenario as described in the example above, you could do the following with tag pairs:
+
+<pre>
+	<code>
+		{exp:channel:entries channel="blog"}
+			{member_list}
+				<p>Name: {screen_name}</p>
+				<p>Email: {email}</p>
+				<p>Member of: {group_title}</p>
+			{/member_list}
+		{/exp:channel:entries}
+	</code>
+</pre>
+
+*Returns:*
+<pre>
+	<code>
+		<p>Name: John Smith</p>
+		<p>Email: john@smith.com</p>
+		<p>Member of: Super Admin</p>
+	</code>
+</pre>
+
+h2. Parameters
+
+h3. Get
+
+<pre>
+	<code>get="screen_name"</code>
+</pre>
+
+Allows you to specify what member data to return. Accepts field names of the _exp_members_ and _exp_member_groups_ database tables.
+
+Some valid field name examples:
+* _member_id_
+* _username_
+* _screen_name_
+* _email_
+* _group_title_
+* _bio_
+* _avatar_filename_

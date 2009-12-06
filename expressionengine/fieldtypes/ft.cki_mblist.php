@@ -1,16 +1,16 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 	
-	class Member_list_ft extends EE_Fieldtype 
+	class Cki_mblist_ft extends EE_Fieldtype 
 	{
 		
 		var $info = array(
-			'name'		=> 'Member List',
+			'name'		=> 'CKI Member List',
 			'version'	=> '1.0'
 		);
 		
 		var $has_array_data = TRUE;
 		
-		function Member_list_ft()
+		function Cki_mblist_ft()
 		{
 			parent::EE_Fieldtype();
 		}
