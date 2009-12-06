@@ -5,7 +5,7 @@
 		
 		var $info = array(
 			'name'		=> 'CKI Member List',
-			'version'	=> '1.0'
+			'version'	=> '1.1'
 		);
 		
 		var $has_array_data = TRUE;
@@ -24,20 +24,24 @@
 			$member_list = array();
 			$deleted_user_message = '';
 			
-			$this->EE->db->select('member_id, screen_name');
-			$q = $this->EE->db->get('exp_members');
+			$this->EE->db->select('*');
+			$this->EE->db->from('exp_members');
+			$this->EE->db->join('exp_member_groups', 'exp_members.group_id = exp_member_groups.group_id');
+			$this->EE->db->order_by('exp_member_groups.group_id asc, exp_members.screen_name');
+			$q = $this->EE->db->get();
 			
-			//Add a blank option as default
-			$member_list[''] = "-"; 
+			//Create a blank option
+			$member_list[''] = "None";
 			
-			//Setup the member list array to send to the form_dropdwon function
+			//Setup the member list array to send to the form_dropdown function
 			foreach($q->result_array() as $member)
 			{
-				$member_list[$member['member_id']] = $member['screen_name'];
+				$member_list[$member['group_title']][$member['member_id']] = $member['screen_name'];
+				$member_id_array[$member['member_id']] = $member['screen_name'];
 			}
 			
 			//Quickly check to see (if on the EDIT page) that the previously selected member still exists
-			if(!array_key_exists($data, $member_list) && $data != '')
+			if(!array_key_exists($data, $member_id_array) && $data != '')
 			{
 				//If not, append a warning message
 				$deleted_user_message = "&nbsp;<span class='notice'>Selected member no longer exists.</span>";

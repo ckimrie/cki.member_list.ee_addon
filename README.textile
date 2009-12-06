@@ -105,3 +105,13 @@ Some valid field name examples:
 * _group_title_
 * _bio_
 * _avatar_filename_
+
+
+h2. Changelog
+
+*1.1*
+* Separated members into member groups in publish form drop down list
+* Updated member existence checker
+
+*1.0*
+* Initial Commit
