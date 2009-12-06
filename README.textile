@@ -6,12 +6,12 @@ This is a custom fieldtype that will add a drop down list of all your site membe
 
 h2. Info
 
-Developed by Christopher Imrie, http://www.christopherimrie.com<br/>
-This field type is inspired by LG Member list (http://leevigraham.com/cms-customisation/expressionengine/lg-member-list/)<br/>
+Developed by Christopher Imrie, "http://www.christopherimrie.com":url<br/>
+This field type is inspired by LG Member list ("http://leevigraham.com/cms-customisation/expressionengine/lg-member-list/":url)<br/>
 
 h2. Requirements
 
-* ExpressionEngine 2.0 PB
+* ExpressionEngine 2.0
 
 h2. Installation
 
@@ -20,10 +20,7 @@ h2. Installation
 
 h2. How to use
 
-*Parameters*
-* <code>get</code> - Accepts field names of the _exp_members_ and _exp_member_groups_
-
-The field type supports single tag and tag pairs, depending on whether you want more than one piece of member data at any one time.
+The field type supports single tag and tag pairs, depending on whether you want more than one element of member data at any one time.
 
 The member_id of the selected member can be produced by simply using the Field name of your custom field with no parameters.  If you want to retrieve a specific item of member data, you can use the <code>get</code> parameter to specify what data you want returned.
 
