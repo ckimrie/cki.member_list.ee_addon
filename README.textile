@@ -109,6 +109,9 @@ Some valid field name examples:
 
 h2. Changelog
 
+*1.1.1*
+* Fixed bug for when using single field tags in templates
+
 *1.1*
 * Separated members into member groups in publish form drop down list
 * Updated member existence checker

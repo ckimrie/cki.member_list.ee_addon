@@ -5,7 +5,7 @@
 		
 		var $info = array(
 			'name'		=> 'CKI Member List',
-			'version'	=> '1.1'
+			'version'	=> '1.1.1'
 		);
 		
 		var $has_array_data = TRUE;
