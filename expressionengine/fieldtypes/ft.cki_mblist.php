@@ -102,7 +102,13 @@
 				{
 					return $data[$params['get']];
 				}else{
-					return FALSE;
+					if(array_key_exists('member_id', $data))
+					{
+						return $data['member_id'];
+					}else{
+						return FALSE;
+					}
+					
 				}
 			}
 			
