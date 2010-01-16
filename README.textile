@@ -17,7 +17,7 @@ h2. Requirements
 
 h2. Installation
 
-* Copy <code>ft.cki_mblist.php</code> to your <code>system/expressionengine/fieldtypes/</code> folder.<br/>
+* Copy the <code>cki_mblist</code> folder to your <code>system/expressionengine/third_party/</code> folder.<br/>
 * Select *CKI Member List* as the field type when creating a new custom field type
 
 h2. How to use
