@@ -4,11 +4,11 @@ h1. CKI Member List Custom Field
 
 
 /***************************************************************/
-/																/
-/	The latest build of EE breaks this field as they are		/
-/	about to implement their custom field API.  Hence this 		/
-/	field will not work until EllisLab publish the API.			/
-/																/
+																
+	The latest build of EE breaks this field as they are		
+	about to implement their custom field API.  Hence this 		
+	field will not work until EllisLab publish the API.			
+																
 /***************************************************************/
 
 
