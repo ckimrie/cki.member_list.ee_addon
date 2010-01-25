@@ -2,16 +2,6 @@ h1. CKI Member List Custom Field
 
 !http://www.ckidesign.co.uk/images/git/member_list_1.png!
 
-
-/***************************************************************/
-																
-	The latest build of EE breaks this field as they are		
-	about to implement their custom field API.  Hence this 		
-	field will not work until EllisLab publish the API.			
-																
-/***************************************************************/
-
-
 *ft.cki_mblist.php*
 
 This is an EE2.0 custom field type that will add a drop down list of all your site members to your ExpressionEngine publish form.  When displaying the field in your ExpressionEngine templates the custom field tag will allow you to retrieve any information stored for that member, such as Email, Screen name, Member ID, Member group name etc.
@@ -28,6 +18,7 @@ h2. Requirements
 h2. Installation
 
 * Copy the <code>cki_mblist</code> folder to your <code>system/expressionengine/third_party/</code> folder.<br/>
+* Go to Add-ons -> Fieldtypes in the ExpressionEngine control panel and install the fieldtype labelled 'CKI Member List'
 * Select *CKI Member List* as the field type when creating a new custom field type
 
 h2. How to use
@@ -118,6 +109,9 @@ Some valid field name examples:
 
 
 h2. Changelog
+
+*1.2*
+* Updated to use newly published field type API
 
 *1.1.1*
 * Fixed bug for when using single field tags in templates
