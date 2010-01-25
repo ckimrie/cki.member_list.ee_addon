@@ -8,7 +8,7 @@ class Cki_mblist_ft extends EE_Fieldtype
 	
 	var $info	=	array(
 				'name'		=>	'CKI Member List',
-				'version'	=>	'1.1'
+				'version'	=>	'1.2'
 	);
 	
 	function Cki_mblist_ft()
