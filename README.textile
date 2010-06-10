@@ -46,12 +46,12 @@ Lets say you have defined a custom field with a field label of *Member_list* and
 
 h3. Parameter Example
 
-Using the same member you have selected in the above example, we can retrieve this member's email address by using the <code>get</code> parameter:
+Using the same member you have selected in the above example, we can retrieve this member's email address by using the <code>show</code> parameter:
 
 <pre>
 	<code>
 		{exp:channel:entries channel="blog"}
-			<p>You selected member email is {member_list get="email"}</p>
+			<p>You selected member email is {member_list show="email"}</p>
 		{/exp:channel:entries}
 	</code>
 </pre>
@@ -61,54 +61,42 @@ Using the same member you have selected in the above example, we can retrieve th
 	<code><p>Your selected member email is john@smith.com</p></code>
 </pre>
 
-h3. Tag Pair Example
-
-If you are looking to display a block of many pieces of member data within a template, it will most be likely be useful to use the tag pairs, as they can allow you reduce the amount of markup needed.  The <code>get</code> parameter is ignored when using tag pairs.
-
-Using the same scenario as described in the example above, you could do the following with tag pairs:
-
-<pre>
-	<code>
-		{exp:channel:entries channel="blog"}
-			{member_list}
-				<p>Name: {screen_name}</p>
-				<p>Email: {email}</p>
-				<p>Member of: {group_title}</p>
-			{/member_list}
-		{/exp:channel:entries}
-	</code>
-</pre>
-
-*Returns:*
-<pre>
-	<code>
-		<p>Name: John Smith</p>
-		<p>Email: john@smith.com</p>
-		<p>Member of: Super Admin</p>
-	</code>
-</pre>
-
 h2. Parameters
 
 h3. Get
 
 <pre>
-	<code>get="screen_name"</code>
+	<code>show="screen_name"</code>
 </pre>
 
 Allows you to specify what member data to return. Accepts field names of the _exp_members_ and _exp_member_groups_ database tables.
 
-Some valid field name examples:
+Valid examples:
 * _member_id_
 * _username_
 * _screen_name_
 * _email_
 * _group_title_
+* _group_description_
 * _bio_
 * _avatar_filename_
-
+* _url_
+* _location_
+* _occupation_
+* _avatar_filename_
+* _avatar_width_
+* _avatar_height_
+* _total_entries_
+* _total_comments_
+* _total_forum_posts_
+* _total_forum_topics_
 
 h2. Changelog
+
+*1.3*
+* Removed tag pair functionality due to conflicts
+* Now promoting use of "show" parameter instead of "get"
+* Compatibility fixes for EE 2.0.2 PB
 
 *1.2*
 * Updated to use newly published field type API
