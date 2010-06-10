@@ -5,10 +5,12 @@
 */
 class Cki_mblist_ft extends EE_Fieldtype
 {
+	//Needed in order to get the fieldtype to work as a single AND tag pair
+	var $has_array_data = TRUE;
 	
 	var $info	=	array(
 				'name'		=>	'CKI Member List',
-				'version'	=>	'1.2'
+				'version'	=>	'1.3'
 	);
 	
 	function Cki_mblist_ft()
@@ -80,37 +82,26 @@ class Cki_mblist_ft extends EE_Fieldtype
 	
 	function replace_tag($data, $params = array(), $tagdata = FALSE)
 	{
-		$tags = array();
-		
-		//Double tag 
-		if($tagdata !== FALSE)
+		//Promote the use of the "show" parameter to select member data,
+		//but keep backward compatibility by allowing "get" to still be used
+		if (isset($params['show']))
 		{
-			if($data)
-			{
-				$tagdata = $this->EE->functions->prep_conditionals($tagdata, $data);
-				$tagdata = $this->EE->functions->var_swap($tagdata, $data);
-			}
-			
-			return $tagdata;
-
-		//Single tags
-		}else{
-			//Check everything is in order and the requested array key exists
-			if($data !== FALSE && isset($params['get']) && array_key_exists($params['get'], $data))
-			{
-				return $data[$params['get']];
-			}else{
-				if(array_key_exists('member_id', $data))
-				{
-					return $data['member_id'];
-				}else{
-					return FALSE;
-				}
-				
-			}
+			$params['get'] = $params['show'];
 		}
 		
-		
+		//Check everything is in order and the requested array key exists
+		if($data !== FALSE && isset($params['get']) && array_key_exists($params['get'], $data))
+		{
+			return $data[$params['get']];
+		}else{
+			if(array_key_exists('member_id', $data))
+			{
+				return $data['screen_name'];
+			}else{
+				return FALSE;
+			}
+			
+		}
 	}
 	
 	
