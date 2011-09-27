@@ -1,4 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
+
+require_once(PATH_THIRD . 'cki_mblist/config.php');
 	
 /**
 * 
@@ -9,25 +11,33 @@ class Cki_mblist_ft extends EE_Fieldtype
 	var $has_array_data = TRUE;
 	
 	var $info	=	array(
-				'name'		=>	'CKI Member List',
-				'version'	=>	'1.3'
+				'name'		=>	CKI_MBLIST_NAME,
+				'version'	=>	CKI_MBLIST_VER
 	);
 	
 	function Cki_mblist_ft()
 	{
 		parent::EE_Fieldtype();
+
+		$this->EE->lang->loadfile(CKI_MBLIST_KEY);
 	}
-	
+
+	/*
+	 * param $data mixed	Previously saved cell data
+	 */
 	function display_field($data)
 	{
 		$text_direction = ($this->settings['field_text_direction'] == 'rtl') ? 'rtl' : 'ltr';
 		$member_list = array();
 		$deleted_user_message = '';
 		
-		$this->EE->db->select('*');
+		$this->EE->db->select('group_title, member_id, screen_name');
 		$this->EE->db->from('exp_members');
 		$this->EE->db->join('exp_member_groups', 'exp_members.group_id = exp_member_groups.group_id');
 		$this->EE->db->order_by('exp_member_groups.group_id asc, exp_members.screen_name');
+		if($this->settings[CKI_MBLIST_KEY]['group_ids']) {
+			$this->EE->db->where_in('exp_members.group_id', explode('|', $this->settings[CKI_MBLIST_KEY]['group_ids'])); 
+		}
 		$q = $this->EE->db->get();
 		
 		//Create a blank option
@@ -115,23 +125,49 @@ class Cki_mblist_ft extends EE_Fieldtype
 		if($data != '')
 		{
 			//Query the database to see if selected member exists
-			$this->EE->db->select('member_id');
-			$this->EE->db->limit(1);
-			$q = $this->EE->db->get('exp_members');
+			$q = $this->EE->db->get_where('exp_members', array('member_id' => $data), 1);
 			
-			if($q->num_rows() == 0)
+			if($q->num_rows() ===  1)
 			{
-				return "The Member you have selected does not exist";
-			}else{
 				return TRUE;
+			}else{
+				return "The Member you have selected does not exist";
 			}
 		}
 	}
 	//END
+
+	function display_settings($data)
+	{
+		$this->EE->db->select('group_id, group_title');
+		$this->EE->db->from('exp_member_groups');
+		$this->EE->db->order_by('group_id asc');
+		$q = $this->EE->db->get();
+		
+		$field_options = array();
+		
+		//Setup the member list array to send to the form_dropdown function
+		foreach($q->result_array() as $group)
+		{
+			$field_options['group_ids'][$group['group_id']] = $group['group_title'];
+		}
+		
+		// is this a new field?
+		$field_values = (array_key_exists(CKI_MBLIST_KEY, $data)) ?
+			$data[CKI_MBLIST_KEY] :
+			$this->_normalise_settings()
+		;
+		
+		$this->EE->table->add_row(
+			'<strong>' . lang('group_ids_label') . '</strong><br />' . lang('group_ids_label_notes'),
+			form_multiselect('cki_mblist[group_ids][]', $field_options['group_ids'], explode('|', $field_values['group_ids']))
+		);
+
+	}
 	
 	function save_settings($data)
 	{
-		// nothing
+		return array(CKI_MBLIST_KEY => $this->_normalise_settings($_POST[CKI_MBLIST_KEY], TRUE));
 	}
 	//END
 	
@@ -143,6 +179,50 @@ class Cki_mblist_ft extends EE_Fieldtype
 	function uninstall()
 	{
 		//nothing
+	}
+
+	/**
+	 * Fetch from array
+	 *
+	 * This is a helper function to retrieve values from an array
+	 * It has been borrowed, verbatim, from EE->input
+	 *
+	 * @access	private
+	 * @param	array
+	 * @param	string
+	 * @param	bool
+	 * @return	string
+	 */
+	function _fetch_from_array(&$array = array(), $index = '', $xss_clean = FALSE)
+	{
+		if ( ! isset($array[$index]))
+		{
+			return FALSE;
+		}
+
+		if ($xss_clean === TRUE)
+		{
+			return $this->EE->security->xss_clean($array[$index]);
+		}
+
+		return $array[$index];
+	}
+	// --------------------------------------------------------------------
+
+	/**
+	 * Normalise Settings
+	 * Ensures all setting values are acceptable formats/ranges before saving
+	 * If passed array is empty, it returns an array of default settings
+	 *
+	 * @param	array
+	 * @param	bool
+	 * @return	array settings
+	 */
+	function _normalise_settings(&$array = array(), $xss_clean = FALSE)
+	{
+		return array(
+			'group_ids'	=> ($this->_fetch_from_array($array, 'group_ids', $xss_clean)) ? implode('|', $this->_fetch_from_array($array, 'group_ids', $xss_clean)) : ''
+		);
 	}
 }
 
