@@ -104,7 +104,7 @@ class Cki_mblist_ft extends EE_Fieldtype
 		{
 			return $data[$params['get']];
 		}else{
-			if(array_key_exists('member_id', $data))
+			if(is_array($data) && array_key_exists('member_id', $data))
 			{
 				return $data['screen_name'];
 			}else{
