@@ -34,6 +34,7 @@ class Cki_mblist_ft extends EE_Fieldtype
 		$this->EE->db->select('group_title, member_id, screen_name');
 		$this->EE->db->from('exp_members');
 		$this->EE->db->join('exp_member_groups', 'exp_members.group_id = exp_member_groups.group_id');
+		$this->EE->db->join('exp_member_data', 'exp_member_data.member_id = exp_members.member_id');
 		$this->EE->db->order_by('exp_member_groups.group_id asc, exp_members.screen_name');
 		if($this->settings[CKI_MBLIST_KEY]['group_ids']) {
 			$this->EE->db->where_in('exp_members.group_id', explode('|', $this->settings[CKI_MBLIST_KEY]['group_ids'])); 
@@ -71,6 +72,7 @@ class Cki_mblist_ft extends EE_Fieldtype
 		$this->EE->db->select('*');
 		$this->EE->db->from('exp_members');
 		$this->EE->db->join('exp_member_groups', 'exp_members.group_id = exp_member_groups.group_id');
+		$this->EE->db->join('exp_member_data', 'exp_member_data.member_id = exp_members.member_id');
 		$this->EE->db->limit(1);
 		$this->EE->db->where('exp_members.member_id', $data);
 		$q = $this->EE->db->get();
