@@ -31,7 +31,7 @@ class Cki_mblist_ft extends EE_Fieldtype
 		$member_list = array();
 		$deleted_user_message = '';
 		
-		$this->EE->db->select('group_title, member_id, screen_name');
+		$this->EE->db->select('group_title, exp_members.member_id, screen_name');
 		$this->EE->db->from('exp_members');
 		$this->EE->db->join('exp_member_groups', 'exp_members.group_id = exp_member_groups.group_id');
 		$this->EE->db->join('exp_member_data', 'exp_member_data.member_id = exp_members.member_id');
