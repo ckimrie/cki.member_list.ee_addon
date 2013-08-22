@@ -2,7 +2,7 @@
 if (! defined('CKI_MBLIST_KEY'))
 {
 	define('CKI_MBLIST_NAME', 'CKI Member List');
-	define('CKI_MBLIST_VER',  '1.3.1');
+	define('CKI_MBLIST_VER',  '1.3.2');
 	define('CKI_MBLIST_KEY', 'cki_mblist');
 	define('CKI_MBLIST_AUTHOR',  'Christopher Imrie');
 	define('CKI_MBLIST_DOCS',  'https://github.com/ckimrie/cki.member_list.ee_addon');
