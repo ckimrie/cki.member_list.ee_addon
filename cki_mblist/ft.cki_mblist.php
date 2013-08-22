@@ -17,7 +17,7 @@ class Cki_mblist_ft extends EE_Fieldtype
 	
 	function Cki_mblist_ft()
 	{
-		parent::EE_Fieldtype();
+		parent::__construct();
 
 		$this->EE->lang->loadfile(CKI_MBLIST_KEY);
 	}
